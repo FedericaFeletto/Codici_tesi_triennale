@@ -80,6 +80,7 @@ if nargin < 1, example=1; end
 
 warning off;
 tol= 10^(-2); % Lebesgue constant relative error tolerance.
+m_pts=4;
 mindeg=1;
 maxdeg=50;
 save_domain_plots=1; % 1. save figs with domain
@@ -111,7 +112,7 @@ for deg=degV
     % lebL_est      : (leb_LB+leb_UB)/2
     % leb_LB  : fine approximation of Lebesgue constant.
 
-    pts=complex_AM(domain,deg,m);
+    pts=complex_AM(domain,deg,m_pts);
     [leb_LB,zAM,C,domain]=evaluate_leb_const(domain,pts,deg,m);
     leb_UB=C*leb_LB;
     lebL_est=(leb_LB+leb_UB)/2; % estimating Lebesgue constant
@@ -120,8 +121,8 @@ for deg=degV
     lebV_UB(deg,1)=leb_UB;
     AM_cost(deg,1)=C;
 
-    fprintf('\n \t -> deg: %3.0f leb: [%1.3e , %1.3e]  m: %3.0f  AM#: %7.0f',...
-        deg,leb_LB,leb_UB,m,length(zAM));
+    fprintf('\n \t -> deg: %3.0f leb: [%1.3e , %1.3e]  m_pts: %3.0f  m: %3.0f  AM#: %7.0f',...
+        deg,leb_LB,leb_UB,m_pts,m,length(zAM));
 
 end
 
@@ -132,6 +133,7 @@ fprintf('\n \t Pointset AM');
 fprintf('\n \t Example                    : %2.0f',example);
 fprintf('\n \t Max Degree                 : %3.0f',degV(end));
 fprintf('\n \t Required tolerance (tol)   : %1.5f',tol);
+fprintf('\n \t AM factor (m_pts)          : %6.0f',m_pts);
 fprintf('\n \t ......................................');
 fprintf('\n \n');
 
